@@ -134,7 +134,10 @@ where
 
 /// Decodes and verifies the correctness of a keyless account.
 /// Provides type of account and keyless IDs.
-fn decode_account_ids(account: &AccountId32) -> BlockchainAccountIds {
+fn decode_account_ids(account: &AccountId32) -> BlockchainAccountIds
+where
+    AccountId32: From<[u8; 32]>,
+{
     let account_bytes: &[u8; 32] = account.as_ref();
 
     let type_identifier: AddressIdentifierType = account_bytes[4];

@@ -23,6 +23,10 @@ impl AccountId32 {
     pub const fn new(inner: [u8; 32]) -> Self {
         Self(inner)
     }
+
+    pub fn inner(&self) -> &[u8; 32] {
+        &self.0
+    }
 }
 
 impl AsRef<[u8; 32]> for AccountId32 {
