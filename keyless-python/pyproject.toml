@@ -1,0 +1,28 @@
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+fix = false
+
+exclude = [
+    ".venv",
+    "venv",
+    ".env",
+    "env",
+]
+
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "C90", "I", "N", "UP", "ANN", "S", "B", "A", "COM", "DTZ", "EM", "FA", "ISC", "PIE", "T20", "PYI", "Q", "RSE", "RET", "SLF", "SLOT", "SIM", "TID", "INT", "ARG", "PTH", "TD", "FIX", "PL", "TRY", "RUF"]
+ignore = ["COM812", "ANN102", "UP040"]
+
+fixable = ["ALL"]
+
+
+[tool.ruff.format]
+exclude = ["ss58.py"]
+
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+exclude = ["setup.py", "build"]

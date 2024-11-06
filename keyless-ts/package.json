@@ -1,0 +1,39 @@
+{
+  "name": "trait-keyless",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest",
+    "format-check": "npx prettier . --check",
+    "format-fix": "npx prettier . --write",
+    "lint-check": "eslint './src/**/*.{ts,tsx}'",
+    "lint-fix": "eslint --fix './src/**/*.{ts,tsx}'",
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@polkadot/keyring": "^12.6.2",
+    "@polkadot/types": "^10.12.6",
+    "@polkadot/util": "^12.6.2",
+    "@polkadot/util-crypto": "^12.6.2",
+    "assert": "^2.1.0",
+    "blake2b": "^2.1.4",
+    "blakejs": "^1.2.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/mocha": "^10.0.7",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "jest": "^29.7.0",
+    "prettier": "3.3.3",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.5.4"
+  }
+}

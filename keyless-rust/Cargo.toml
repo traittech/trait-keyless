@@ -1,0 +1,33 @@
+[package]
+name = "trait-keyless"
+version = "0.2.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "This library provides functions for encoding and decoding keyless addresses, used by the TRAIT blockchain: application agent addresses, transactional addresses, and named addresses."
+homepage = "https://trait.tech"
+repository = "https://github.com/traittech/trait-keyless/"
+readme = "README.md"
+keywords = ["trait-blockchain"]
+categories = ["encoding", "wasm"]
+
+[features]
+default = ["std"]
+std = [
+    "hex/std",
+    "blake2b_simd/std",
+    "sp-runtime/std",
+    "parity-scale-codec/std",
+    "scale-info/std",
+    "sp-std/std",
+]
+
+[dependencies]
+hex = { version = "0.4.3", default-features = false }
+blake2b_simd = { version = "1.0.1", default-features = false }
+sp-runtime = { version="39.0.2", default-features = false }
+sp-std = { version="14.0.0", default-features = false }
+parity-scale-codec = { version = "3.6.9", default-features = false }
+scale-info = { version = "2.11.1", default-features = false }
+
+[dev-dependencies]
+array-bytes = { version = "6.2.3", default-features = true }

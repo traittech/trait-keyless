@@ -1,0 +1,13 @@
+*/target
+./keyless-python/.*
+*/node_modules
+
+
+.venv
+env/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+__pycache__/
+build/
+keyless-python/.eggs/*
