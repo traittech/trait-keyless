@@ -15,17 +15,13 @@ default = ["std"]
 std = [
     "hex/std",
     "blake2b_simd/std",
-    "sp-runtime/std",
     "parity-scale-codec/std",
     "scale-info/std",
-    "sp-std/std",
 ]
 
 [dependencies]
 hex = { version = "0.4.3", default-features = false }
 blake2b_simd = { version = "1.0.1", default-features = false }
-sp-runtime = { version="39.0.2", default-features = false }
-sp-std = { version="14.0.0", default-features = false }
 parity-scale-codec = { version = "3.6.9", default-features = false }
 scale-info = { version = "2.11.1", default-features = false }
 

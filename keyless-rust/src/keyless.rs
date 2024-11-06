@@ -1,7 +1,6 @@
 use crate::types::*;
 use parity_scale_codec::alloc::string::ToString;
 use scale_info::prelude::string::String;
-use sp_runtime::AccountId32;
 
 // Original implementation of "blake2" and "blake2_256":
 // https://github.com/paritytech/polkadot-sdk/blob/polkadot-stable2407-2/substrate/primitives/crypto/hashing/src/lib.rs

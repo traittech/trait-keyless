@@ -2,7 +2,6 @@
 mod tests_encoding {
     use crate::keyless::*;
     use crate::types::*;
-    use sp_runtime::AccountId32;
 
     fn account_id_from_str(account_id_str: &str) -> AccountId32 {
         let account_id_vec = array_bytes::hex2bytes(account_id_str).unwrap();
