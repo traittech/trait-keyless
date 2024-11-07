@@ -1,4 +1,5 @@
-use parity_scale_codec::{Decode, Encode};
+use parity_scale_codec::{Decode, Encode, MaxEncodedLen};
+use scale_info::TypeInfo;
 
 // Types of identifiers
 pub type AppAgentId = u32;
@@ -11,7 +12,7 @@ pub const TRANSACTIONAL_ADDRESS_IDENTIFIER: AddressIdentifierType = 2;
 pub const NAMED_ADDRESS_IDENTIFIER: AddressIdentifierType = 3;
 
 /// An opaque 32-byte cryptographic identifier.
-#[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Encode, Decode, Debug)]
+#[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Encode, Decode, Debug, TypeInfo, MaxEncodedLen)]
 #[cfg_attr(feature = "std", derive(Hash))]
 pub struct AccountId32([u8; 32]);
 
@@ -47,7 +48,20 @@ impl From<AccountId32> for [u8; 32] {
     }
 }
 
-#[derive(Clone, Encode, Decode, Debug, Eq, PartialEq, Ord, PartialOrd, Default, Copy)]
+#[derive(
+    Clone,
+    Encode,
+    Decode,
+    Debug,
+    Eq,
+    PartialEq,
+    Ord,
+    PartialOrd,
+    Default,
+    Copy,
+    TypeInfo,
+    MaxEncodedLen,
+)]
 pub struct AddressName([u8; 10]);
 
 impl AddressName {
@@ -72,6 +86,10 @@ impl AddressName {
 
     pub fn as_bytes(&self) -> &[u8; 10] {
         &self.0
+    }
+
+    pub fn starts_with(&self, prefix: &[u8]) -> bool {
+        self.0.starts_with(prefix)
     }
 }
 
