@@ -274,7 +274,7 @@ dependencies = [
 
 [[package]]
 name = "trait-keyless"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "array-bytes",
  "blake2b_simd",

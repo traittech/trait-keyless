@@ -1,6 +1,6 @@
 [package]
 name = "trait-keyless"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "This library provides functions for encoding and decoding keyless addresses, used by the TRAIT blockchain: application agent addresses, transactional addresses, and named addresses."
