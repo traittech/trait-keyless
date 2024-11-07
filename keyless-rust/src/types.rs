@@ -1,6 +1,5 @@
 use parity_scale_codec::{Decode, Encode, MaxEncodedLen};
-use sp_runtime::AccountId32;
-use sp_std::ops::Deref;
+use scale_info::TypeInfo;
 
 // Types of identifiers
 pub type AppAgentId = u32;
@@ -12,6 +11,43 @@ pub const APP_AGENT_ADDRESS_IDENTIFIER: AddressIdentifierType = 1;
 pub const TRANSACTIONAL_ADDRESS_IDENTIFIER: AddressIdentifierType = 2;
 pub const NAMED_ADDRESS_IDENTIFIER: AddressIdentifierType = 3;
 
+/// An opaque 32-byte cryptographic identifier.
+#[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Encode, Decode, Debug, TypeInfo, MaxEncodedLen)]
+#[cfg_attr(feature = "std", derive(Hash))]
+pub struct AccountId32([u8; 32]);
+
+impl AccountId32 {
+    /// Create a new instance from its raw inner byte value.
+    ///
+    /// Equivalent to this types `From<[u8; 32]>` implementation. For the lack of const
+    /// support in traits we have this constructor.
+    pub const fn new(inner: [u8; 32]) -> Self {
+        Self(inner)
+    }
+
+    pub fn inner(&self) -> &[u8; 32] {
+        &self.0
+    }
+}
+
+impl AsRef<[u8; 32]> for AccountId32 {
+    fn as_ref(&self) -> &[u8; 32] {
+        &self.0
+    }
+}
+
+impl From<[u8; 32]> for AccountId32 {
+    fn from(x: [u8; 32]) -> Self {
+        Self::new(x)
+    }
+}
+
+impl From<AccountId32> for [u8; 32] {
+    fn from(x: AccountId32) -> [u8; 32] {
+        x.0
+    }
+}
+
 #[derive(
     Clone,
     Encode,
@@ -19,12 +55,12 @@ pub const NAMED_ADDRESS_IDENTIFIER: AddressIdentifierType = 3;
     Debug,
     Eq,
     PartialEq,
-    scale_info::TypeInfo,
     Ord,
     PartialOrd,
-    MaxEncodedLen,
     Default,
     Copy,
+    TypeInfo,
+    MaxEncodedLen,
 )]
 pub struct AddressName([u8; 10]);
 
@@ -51,13 +87,9 @@ impl AddressName {
     pub fn as_bytes(&self) -> &[u8; 10] {
         &self.0
     }
-}
 
-impl Deref for AddressName {
-    type Target = [u8; 10];
-
-    fn deref(&self) -> &Self::Target {
-        &self.0
+    pub fn starts_with(&self, prefix: &[u8]) -> bool {
+        self.0.starts_with(prefix)
     }
 }
 
@@ -76,7 +108,7 @@ impl TryFrom<&[u8]> for AddressName {
 /// - `AppAgent`: An account associated with an application agent.
 /// - `Transactional`: An account used for transactional purposes.
 /// - `Named`: An account that has a specific name associated with it.
-#[derive(Eq, PartialEq, Debug, scale_info::TypeInfo, Clone, Copy)]
+#[derive(Eq, PartialEq, Debug, Clone, Copy)]
 pub enum AddressType {
     Regular,
     AppAgent,
