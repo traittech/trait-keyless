@@ -64,7 +64,7 @@ function validateAddress(address: string): void {
  * @throws {Error} If ID is invalid
  */
 function validateAppAgentId(appAgentId: number): void {
-  if (isNaN(appAgentId) || appAgentId < 0 || appAgentId > UINT32_MAX) {
+  if (Number.isNaN(appAgentId) || appAgentId < 0 || appAgentId > UINT32_MAX) {
     throw new Error(
       `App agent ID must be an integer between 0 and ${UINT32_MAX}`,
     );
