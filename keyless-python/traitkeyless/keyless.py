@@ -26,6 +26,8 @@ from .ss58 import ss58_decode, ss58_encode
 # Constants
 NAMED_ADDRESS_LENGTH = 10
 SS58_FORMAT__TRAIT_ASSET_HUB = 5335
+UINT32_MAX = 4_294_967_295
+SS58_ADDRESS_LENGTH = 49
 
 
 # Types of address identifiers
@@ -95,7 +97,7 @@ def _validate_app_agent_id(app_agent_id: AppAgentId) -> None:
     Raises:
         ValueError: If the AppAgent ID is not a valid 32-bit unsigned integer.
     """
-    if app_agent_id < 0 or app_agent_id > 4_294_967_295:
+    if app_agent_id < 0 or app_agent_id > UINT32_MAX:
         msg = "AppAgent ID must be unsigned 32-bit integer"
         raise ValueError(msg)
 
@@ -117,7 +119,7 @@ def _validate_blockchain_address(address: BlockchainAddress) -> None:
     print(address, len(address))
 
     # SS58 addresses are base58 encoded and typically 49 characters long
-    if not (len(address) == 49):
+    if not (len(address) == SS58_ADDRESS_LENGTH):
         msg = "Invalid address length"
         raise ValueError(msg)
 
