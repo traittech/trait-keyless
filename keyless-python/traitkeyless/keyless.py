@@ -111,11 +111,11 @@ def _validate_blockchain_address(address: BlockchainAddress) -> None:
 
     Raises:
         ValueError: If the address is invalid (wrong format or length).
-    """    
+    """
     if not address:
         msg = "Address cannot be empty"
         raise ValueError(msg)
-    
+
     print(address, len(address))
 
     # SS58 addresses are base58 encoded and typically 49 characters long
