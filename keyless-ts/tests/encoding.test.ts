@@ -8,6 +8,8 @@ import {
   decodeTransactional,
   decodeNamed,
   decodeAddress,
+  validateAddress,
+  validateAppAgentId,
 } from "../src/keyless";
 
 describe("AppAgent", () => {
@@ -22,6 +24,14 @@ describe("AppAgent", () => {
   it("Encodes AppAgent address correctly", () => {
     const encoded_address = encodeAppAgent(app_agent_id, ss58_format);
     expect(encoded_address).toEqual(blockchain_address);
+  });
+
+  it("Validates AppAgent id correctly", () => {
+    expect(() => validateAppAgentId(app_agent_id)).not.toThrow();
+  });
+
+  it("Validates invalid AppAgent id correctly", () => {
+    expect(() => validateAppAgentId(-1)).toThrow();
   });
 
   it("Decodes AppAgent address correctly", () => {
@@ -43,6 +53,14 @@ describe("AppAgent", () => {
       addressName: undefined,
     };
     expect(decoded_info).toEqual(expected_info);
+  });
+
+  it("Validates AppAgent address correctly", () => {
+    expect(() => validateAddress(blockchain_address)).not.toThrow();
+  });
+
+  it("Validates invalid AppAgent address correctly", () => {
+    expect(() => validateAddress("invalid")).toThrow();
   });
 });
 

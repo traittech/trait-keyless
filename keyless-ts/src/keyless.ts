@@ -3,6 +3,7 @@ import {
   decodeAddress as decodeAddressSs58,
   encodeAddress,
 } from "@polkadot/keyring";
+import { hexToU8a, isHex } from "@polkadot/util";
 import { strict as assert } from "assert";
 
 const APP_AGENT_ADDRESS_IDENTIFIER = 1;
@@ -10,6 +11,8 @@ const TRANSACTIONAL_ADDRESS_IDENTIFIER = 2;
 const NAMED_ADDRESS_IDENTIFIER = 3;
 const NAMED_ADDRESS_BYTES_LENGTH = 10;
 const SS58_FORMAT__TRAIT_ASSET_HUB = 5335;
+// https://doc.rust-lang.org/std/u32/constant.MAX.html
+const UINT32_MAX = 4_294_967_295;
 
 enum AddressType {
   Regular = 0,
@@ -41,6 +44,34 @@ function validateAddressName(name: string): void {
 }
 
 /**
+ * Validates a blockchain address format
+ * @param address The address to validate
+ * @throws {Error} If address is invalid
+ */
+function validateAddress(address: string): void {
+  try {
+    encodeAddress(
+      isHex(address)
+        ? hexToU8a(address)
+        : decodeAddressSs58(address)
+    );
+  } catch (error) {
+    throw new Error('Invalid address format');
+  }
+}
+
+/**
+ * Validates an app agent ID
+ * @param appAgentId The ID to validate
+ * @throws {Error} If ID is invalid
+ */
+function validateAppAgentId(appAgentId: number): void {
+  if (isNaN(appAgentId) || appAgentId < 0 || appAgentId > UINT32_MAX) {
+    throw new Error(`App agent ID must be an integer between 0 and ${UINT32_MAX}`);
+  }
+}
+
+/**
  * Encodes an application agent address and returns it.
  *
  * @param {number} appAgentId - The ID of the application agent.
@@ -50,6 +81,8 @@ function encodeAppAgent(
   appAgentId: number,
   ss58Format: number = SS58_FORMAT__TRAIT_ASSET_HUB,
 ): string {
+  validateAppAgentId(appAgentId);
+
   const appAgentIdBytes = Buffer.alloc(4);
   appAgentIdBytes.writeUInt32LE(appAgentId, 0);
 
@@ -73,6 +106,9 @@ function encodeTransactional(
   taId: number,
   ss58Format: number = SS58_FORMAT__TRAIT_ASSET_HUB,
 ): string {
+  validateAppAgentId(appAgentId);
+  validateAppAgentId(taId);
+
   const appAgentIdBytes = Buffer.alloc(4);
   appAgentIdBytes.writeUInt32LE(appAgentId, 0);
 
@@ -99,6 +135,7 @@ function encodeNamed(
   name: string,
   ss58Format: number = SS58_FORMAT__TRAIT_ASSET_HUB,
 ): string {
+  validateAppAgentId(appAgentId);
   validateAddressName(name);
 
   const appAgentIdBytes = Buffer.alloc(4);
@@ -137,6 +174,8 @@ function decodeAddress(
   address: string,
   ss58Format: number = SS58_FORMAT__TRAIT_ASSET_HUB,
 ): BlockchainAddressInfo {
+  validateAddress(address);
+
   const accountId = decodeAddressSs58(address, false, ss58Format);
   const accountIdBuffer = Buffer.from(accountId);
 
@@ -334,5 +373,7 @@ export {
   decodeTransactional,
   decodeNamed,
   decodeAddress,
+  validateAddress,
+  validateAppAgentId,
   SS58_FORMAT__TRAIT_ASSET_HUB,
 };
