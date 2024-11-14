@@ -11,3 +11,4 @@ env/
 __pycache__/
 build/
 keyless-python/.eggs/*
+keyless-python/venv/*

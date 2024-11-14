@@ -26,6 +26,8 @@ from .ss58 import ss58_decode, ss58_encode
 # Constants
 NAMED_ADDRESS_LENGTH = 10
 SS58_FORMAT__TRAIT_ASSET_HUB = 5335
+UINT32_MAX = 4_294_967_295
+SS58_ADDRESS_LENGTH = 49
 
 
 # Types of address identifiers
@@ -85,6 +87,47 @@ def _blake2_256(data: bytes) -> bytes:
 __allowed_chars = set("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-#")
 
 
+def _validate_app_agent_id(app_agent_id: AppAgentId) -> None:
+    """
+    Validates that an AppAgent ID is a valid 32-bit unsigned integer.
+
+    Args:
+        app_agent_id (int): The AppAgent ID to validate.
+
+    Raises:
+        ValueError: If the AppAgent ID is not a valid 32-bit unsigned integer.
+    """
+    if app_agent_id < 0 or app_agent_id > UINT32_MAX:
+        msg = "AppAgent ID must be unsigned 32-bit integer"
+        raise ValueError(msg)
+
+
+def _validate_blockchain_address(address: BlockchainAddress) -> None:
+    """
+    Validates that an address is a valid blockchain address.
+
+    Args:
+        address (str): The blockchain address to validate.
+
+    Raises:
+        ValueError: If the address is invalid (wrong format or length).
+    """
+    if not address:
+        msg = "Address cannot be empty"
+        raise ValueError(msg)
+
+    # SS58 addresses are base58 encoded and typically 49 characters long
+    if len(address) != SS58_ADDRESS_LENGTH:
+        msg = "Invalid address length"
+        raise ValueError(msg)
+
+    # SS58 addresses only contain base58 characters
+    allowed_chars = set("123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz")
+    if not all(c in allowed_chars for c in address):
+        msg = "Address contains invalid characters"
+        raise ValueError(msg)
+
+
 def _validate_address_name(name: str) -> None:
     """
     Validates that a name contains only allowed ASCII characters.
@@ -137,6 +180,8 @@ def encode_app_agent_address(
     Returns:
         str: Encoded AppAgent address.
     """
+    _validate_app_agent_id(app_agent_id)
+
     # Convert app_agent_id to little-endian bytes
     app_agent_id_bytes = app_agent_id.to_bytes(4, byteorder="little")
 
@@ -158,6 +203,7 @@ def decode_app_agent_address(
     Returns:
         int: Decoded AppAgent ID.
     """
+    _validate_blockchain_address(encoded_address)
     decoding_result = decode_address(encoded_address, ss58_format)
 
     if decoding_result.address_type is not AddressType.AppAgent:
@@ -185,6 +231,7 @@ def encode_transactional_address(
     Returns:
         str: Encoded Transactional address.
     """
+    _validate_app_agent_id(app_agent_id)
     # Convert app_agent_id and ta_id to little-endian bytes
     app_agent_id_bytes = app_agent_id.to_bytes(4, byteorder="little")
     ta_id_bytes = ta_id.to_bytes(4, byteorder="little")
@@ -207,6 +254,7 @@ def decode_transactional_address(
     Returns:
         Tuple[int, int]: Decoded AppAgent ID and Transactional address ID.
     """
+    _validate_blockchain_address(encoded_address)
     decoding_result = decode_address(encoded_address, ss58_format)
 
     if decoding_result.address_type is not AddressType.Transactional:
@@ -258,6 +306,7 @@ def decode_named_address(
     Returns:
         Tuple[int, str]: Decoded AppAgent ID and address name.
     """
+    _validate_blockchain_address(encoded_address)
     decoding_result = decode_address(encoded_address, ss58_format)
 
     if decoding_result.address_type is not AddressType.Named:
@@ -285,6 +334,7 @@ def decode_address(
     Returns:
         an object with info about the address
     """
+    _validate_blockchain_address(blockchain_address)
     # Decode the encoded address
     account_id = ss58_decode(blockchain_address, ss58_format)
     account_id_bytes = bytes.fromhex(account_id[2:])
