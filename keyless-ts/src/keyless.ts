@@ -51,12 +51,10 @@ function validateAddressName(name: string): void {
 function validateAddress(address: string): void {
   try {
     encodeAddress(
-      isHex(address)
-        ? hexToU8a(address)
-        : decodeAddressSs58(address)
+      isHex(address) ? hexToU8a(address) : decodeAddressSs58(address),
     );
   } catch (error) {
-    throw new Error('Invalid address format');
+    throw new Error("Invalid address format");
   }
 }
 
@@ -67,7 +65,9 @@ function validateAddress(address: string): void {
  */
 function validateAppAgentId(appAgentId: number): void {
   if (isNaN(appAgentId) || appAgentId < 0 || appAgentId > UINT32_MAX) {
-    throw new Error(`App agent ID must be an integer between 0 and ${UINT32_MAX}`);
+    throw new Error(
+      `App agent ID must be an integer between 0 and ${UINT32_MAX}`,
+    );
   }
 }
 
