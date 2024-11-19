@@ -18,5 +18,5 @@ For more detailed docs, visit the README of the specific library:
 - **Account**: a 32-byte public key of an address;
 - **Address type**: one of the possible address types;
 - **AppAgent ID**: an identifier of an AppAgent `uint32`;
-- **TA ID**: an identifier of a Transactional address, `uint64`;
+- **TA ID**: an identifier of a Transactional address, `uint32`;
 - **Address name**: a name of a Named address, 10 ASCII characters from the list `0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-#`;
