@@ -1,8 +1,6 @@
-# Keyless Addresses Python Library
+# TRAIT Keyless Addresses
 
-This Python library provides functionality for encoding and decoding keyless addresses. 
-
-A keyless address is a type of address that doesn't rely on cryptographic key pairs for identification. Instead, it is derived from a combination of identifiers and checksums, making it suitable for various use cases such as tracking and verification.
+This library provides functions for encoding and decoding keyless addresses, used by the TRAIT blockchain: application agent addresses, transactional addresses, and named addresses.
 
 ## Installation
 
@@ -23,7 +21,7 @@ app_agent_id = 123
 
 # Encode an AppAgent address
 encoded_address = traitkeyless.encode_app_agent_address(app_agent_id)
-assert encoded_address == "ttowKp8AmRn9nxt8Gcout4stYQem7TZNkhpnVmtpS5KG39m2Y"
+assert encoded_address == "ttowKp8AmQuGfbBGikG2pbdYNnErhHRaLrdktJeZEfJVeVnTp"
 
 # Decode the AppAgent address
 decoded_app_agent_id = traitkeyless.decode_app_agent_address(encoded_address)
@@ -40,7 +38,7 @@ transactional_address_id = 456
 
 # Encode a Transactional address
 encoded_address = traitkeyless.encode_transactional_address(app_agent_id, transactional_address_id)
-assert encoded_address == "ttowKp8AmjjQh4HoMJwdKPyEQS5HSXQHwBUrLbn2LJFopLG85"
+assert encoded_address == "ttowKp8AmjjQh4GoN7xMiQWwVyyrU1Pu7GRf5HxFmV5t43TXG"
 
 # Decode the Transactional address
 decoded_data = traitkeyless.decode_transactional_address(encoded_address)
@@ -53,15 +51,15 @@ assert decoded_data == (123, 456)
 import traitkeyless
 
 app_agent_id = 123
-address_name = "example123"
+address_name = "hot-wallet"
 
 # Encode a Named address
 encoded_address = traitkeyless.encode_named_address(app_agent_id, address_name)
-assert encoded_address == "ttowKp8Amrt2FQ2eNdsbMsWDhEDiavXcVdeJBhQE7ttL1np4c"
+assert encoded_address == "ttowKp8Ams1q53N3APEt8PQi8hJ57WjQ92KQTtJrY574nomqv"
 
 # Decode the Named address
 decoded_data = traitkeyless.decode_named_address(encoded_address)
-assert decoded_data == (123, "example123")
+assert decoded_data == (123, "hot-wallet")
 ```
 
 ### Decode any address
@@ -73,13 +71,13 @@ app_agent_id = 123
 
 # Encode a Named address
 encoded_address = traitkeyless.encode_app_agent_address(app_agent_id)
-assert encoded_address == "ttowKp8AmRn9nxt8Gcout4stYQem7TZNkhpnVmtpS5KG39m2Y"
+assert encoded_address == "ttowKp8AmQuGfbBGikG2pbdYNnErhHRaLrdktJeZEfJVeVnTp"
 
 # Decode the Named address
 decoded_data = traitkeyless.decode_address(encoded_address)
 expected_data = traitkeyless.BlockchainAddressInfo(
     address=encoded_address,
-    account_id="0x7b000000013c8b3aeb6b293833058fc7db52fc03f6ce344bca98bd7825ff7477",
+    account_id="0x7b00000001293833058fc7db52fc03f6ce344bca98bd7825ff747743f1ff63e2",
     address_type=traitkeyless.AddressType.AppAgent,
     app_agent_id=123,
     ta_id=None,
@@ -87,9 +85,3 @@ expected_data = traitkeyless.BlockchainAddressInfo(
 )
 assert decoded_data == expected_data
 ```
-
-## Development
-
-To generate python stub files:
-
-`stubgen traitkeyless/keyless.py`

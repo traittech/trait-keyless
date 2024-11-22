@@ -6,6 +6,8 @@ keyless-python/.pytest_cache/
 keyless-python/.ruff_cache/
 keyless-python/__pycache__/
 keyless-python/build/
+keyless-python/dist/
+keyless-python/traitkeyless.egg-info/
 
 keyless-rust/target
 
