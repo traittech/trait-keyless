@@ -23,9 +23,9 @@ interface BlockchainAddressInfo {
   address: string;
   accountId: string;
   addressType: AddressType;
-  appAgentId?: number; // Optional
-  taId?: number; // Optional
-  addressName?: string; // Optional
+  appAgentId: number | null;
+  taId: number | null;
+  addressName: string | null;
 }
 
 /**
@@ -158,8 +158,8 @@ function decodeAddress(
         accountId: `0x${accountIdBuffer.toString("hex")}`,
         addressType: AddressType.AppAgent,
         appAgentId,
-        taId: undefined,
-        addressName: undefined,
+        taId: null,
+        addressName: null,
       };
     }
   }
@@ -181,7 +181,7 @@ function decodeAddress(
         addressType: AddressType.Transactional,
         appAgentId,
         taId,
-        addressName: undefined,
+        addressName: null,
       };
     }
   }
@@ -202,7 +202,7 @@ function decodeAddress(
         accountId: `0x${accountIdBuffer.toString("hex")}`,
         addressType: AddressType.Named,
         appAgentId,
-        taId: undefined,
+        taId: null,
         addressName,
       };
     }
@@ -212,9 +212,9 @@ function decodeAddress(
     address,
     accountId: `0x${accountIdBuffer.toString("hex")}`,
     addressType: AddressType.Regular,
-    appAgentId: undefined,
-    taId: undefined,
-    addressName: undefined,
+    appAgentId: null,
+    taId: null,
+    addressName: null,
   };
 }
 
@@ -235,7 +235,10 @@ function decodeAppAgent(
       `Provided address is not an AppAgent address but is instance of ${AddressType[decodingResult.addressType]}`,
     );
   }
-  if (decodingResult.appAgentId === undefined) {
+  if (
+    decodingResult.appAgentId === undefined ||
+    decodingResult.appAgentId === null
+  ) {
     throw new Error(
       "Internal error in traitkeyless - appAgentId of AppAgent address is undefined",
     );
@@ -266,12 +269,15 @@ function decodeTransactional(
       `Provided address is not a Transactional address but is instance of ${AddressType[decodingResult.addressType]}`,
     );
   }
-  if (decodingResult.appAgentId === undefined) {
+  if (
+    decodingResult.appAgentId === undefined ||
+    decodingResult.appAgentId === null
+  ) {
     throw new Error(
       "Internal error in traitkeyless - appAgentId of Transactional address is undefined",
     );
   }
-  if (decodingResult.taId === undefined) {
+  if (decodingResult.taId === undefined || decodingResult.taId === null) {
     throw new Error(
       "Internal error in traitkeyless - taId of Transactional address is undefined",
     );
@@ -305,12 +311,18 @@ function decodeNamed(
       `Provided address is not a Named address but is instance of ${AddressType[decodingResult.addressType]}`,
     );
   }
-  if (decodingResult.appAgentId === undefined) {
+  if (
+    decodingResult.appAgentId === undefined ||
+    decodingResult.appAgentId === null
+  ) {
     throw new Error(
       "Internal error in traitkeyless - appAgentId of Named address is undefined",
     );
   }
-  if (decodingResult.addressName === undefined) {
+  if (
+    decodingResult.addressName === undefined ||
+    decodingResult.addressName === null
+  ) {
     throw new Error(
       "Internal error in traitkeyless - addressName of Named address is undefined",
     );

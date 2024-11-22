@@ -4,8 +4,11 @@ This library provides functions for encoding and decoding keyless addresses, use
 
 For more detailed docs, visit the README of the specific library:
 
-- Typescript [trait-keyless](./keyless-ts/)
-- Python [traitkeyless](./keyless-python/)
+- Typescript
+  - Sources: [GitHub](./keyless-ts/)
+  - Package: [NPM](https://www.npmjs.com/package/@traittech/trait-keyless)
+- Python 
+  - Sources: [GitHub](./keyless-python/)
 - Rust
   - Sources: [GitHub](./keyless-rust/)
   - Package: [Crates.io](https://crates.io/crates/trait-keyless)

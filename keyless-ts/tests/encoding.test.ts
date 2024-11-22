@@ -39,8 +39,8 @@ describe("AppAgent", () => {
       accountId: account_id,
       addressType: AddressType.AppAgent,
       appAgentId: app_agent_id,
-      taId: undefined,
-      addressName: undefined,
+      taId: null,
+      addressName: null,
     };
     expect(decoded_info).toEqual(expected_info);
   });
@@ -81,7 +81,7 @@ describe("Transactional", () => {
       addressType: AddressType.Transactional,
       appAgentId: app_agent_id,
       taId: transactional_address_id,
-      addressName: undefined,
+      addressName: null,
     };
     expect(decoded_info).toEqual(expected_info);
   });
@@ -121,7 +121,7 @@ describe("Named", () => {
       accountId: account_id,
       addressType: AddressType.Named,
       appAgentId: app_agent_id,
-      taId: undefined,
+      taId: null,
       addressName: address_name,
     };
     expect(decoded_info).toEqual(expected_info);

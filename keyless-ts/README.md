@@ -17,27 +17,56 @@ const {
   decodeTransactional,
   decodeNamed,
   decodeAddress,
-} = require("@trait-keyless/keyless-address");
+} = require("@traittech/trait-keyless");
 ```
 
-## Encoding Addresses
+Example for AppAgent addresses:
 
 ```javascript
 const appAgentId = 123;
-const encodedAddress = encodeAppAgent(appAgentId);
-console.log(encodedAddress);
+const encodedAppAgentAddress = encodeAppAgent(appAgentId);
+console.log("Encoded AppAgent address:", encodedAppAgentAddress);
+
+const decodedAppAgentId = decodeAppAgent(encodedAppAgentAddress);
+console.log("Decoded AppAgent ID:", decodedAppAgentId);
+
+const decodedAppAgentAddress = decodeAddress(encodedAppAgentAddress);
+console.log("Decoded AppAgent address:", decodedAppAgentAddress);
 ```
 
-## Decoding Addresses
+Example for Transactional addresses
 
 ```javascript
-const encodedAddress = "ttowKp8AmRn9nxt8Gcout4stYQem7TZNkhpnVmtpS5KG39m2Y";
-const appAgentId = decodeAppAgent(encodedAddress);
-console.log(appAgentId);
+const taId = 456;
+const encodedTaAddress = encodeTransactional(appAgentId, taId);
+console.log("Encoded Transactional address:", encodedTaAddress);
+
+const decodedTaId = decodeTransactional(encodedTaAddress);
+console.log("Decoded Transactional ID:", decodedTaId);
+
+const decodedTransactionalAddress = decodeAddress(encodedTaAddress);
+console.log("Decoded Transactional address:", decodedTransactionalAddress);
 ```
 
-## Test
+Example for Named addresses
 
-```shell
-npm run test
+```javascript
+const addressName = "hot-wallet";
+const encodedNamedAddress = encodeNamed(appAgentId, addressName);
+console.log("Encoded Named address [123, 'hot-wallet']:", encodedNamedAddress);
+
+const decodedAddressName = decodeNamed(encodedNamedAddress);
+console.log("Decoded address name:", decodedAddressName);
+
+const decodedNamedAddress = decodeAddress(encodedNamedAddress);
+console.log("Decoded Named address:", decodedNamedAddress);
+```
+
+Example for Regular addresses
+
+```javascript
+const encodedRegularAddress =
+  "ttowKp8AmRn9nxt8Gcout4stYQem7TZNkhpnVmtpS5KG39m2Y";
+const decodedRegularAddress = decodeAddress(encodedRegularAddress);
+console.log("Decoded Regular address:", decodedRegularAddress);
 ```
