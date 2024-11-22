@@ -1,6 +1,12 @@
 # TRAIT Keyless Address Encoding and Decoding Library
 
-This library provides functions for encoding and decoding keyless addresses, used by the TRAIT blockchain: application agent addresses, transactional addresses, and named addresses.
+This library provides functions for encoding and decoding keyless addresses used by the TRAIT blockchain:
+application agent addresses, transactional addresses, and named addresses.
+
+A keyless address is a type of blockchain address that does not depend on a pair of
+cryptographic keys for identification.
+Instead, it is derived from a combination of identifiers and checksums and is controlled by an AppAgent.
+This makes the keyless addresses convenient for use in off-chain applications.
 
 For more detailed docs, visit the README of the specific library:
 
@@ -9,6 +15,7 @@ For more detailed docs, visit the README of the specific library:
   - Package: [NPM](https://www.npmjs.com/package/@traittech/trait-keyless)
 - Python 
   - Sources: [GitHub](./keyless-python/)
+  - Package: [PyPI](https://pypi.org/project/traitkeyless/)
 - Rust
   - Sources: [GitHub](./keyless-rust/)
   - Package: [Crates.io](https://crates.io/crates/trait-keyless)
